@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url'
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { fr } from '@payloadcms/translations/languages/fr'
 import sharp from 'sharp'
 
@@ -58,4 +59,15 @@ export default buildConfig({
     },
   }),
   sharp,
+  plugins: [
+    // Sur Vercel, les médias sont stockés dans Vercel Blob (le disque n'y est pas persistant).
+    // En local, sans jeton, ils restent dans le dossier /media.
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: { media: true },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      // Envoi direct depuis le navigateur : contourne la limite de 4,5 Mo des fonctions Vercel.
+      clientUploads: true,
+    }),
+  ],
 })
