@@ -56,4 +56,4 @@ pnpm dev
    - `NEXT_PUBLIC_SERVER_URL` : l'adresse définitive du site, une fois le domaine branché
 4. Relancer le déploiement. Le build applique les migrations de base de données puis construit le site.
 
-À prévoir avant la mise en ligne : stockage des médias (Vercel Blob ou S3), le disque de Vercel n'étant pas persistant.
+Médias : créer un store **Blob** dans l'onglet Storage et le connecter au projet. La variable `BLOB_READ_WRITE_TOKEN` active automatiquement le stockage des photos dans Vercel Blob (sans elle, les fichiers vont dans `/media`, en local).
