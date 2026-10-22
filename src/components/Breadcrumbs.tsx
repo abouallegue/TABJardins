@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import { siteUrl } from '@/lib/siteUrl'
+
 export type Crumb = { label: string; href?: string }
 
 export function Breadcrumbs({ items }: { items: Crumb[] }) {
@@ -11,7 +13,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
       '@type': 'ListItem',
       position: i + 1,
       name: c.label,
-      ...(c.href ? { item: `${process.env.NEXT_PUBLIC_SERVER_URL || ''}${c.href}` } : {}),
+      ...(c.href ? { item: `${siteUrl()}${c.href}` } : {}),
     })),
   }
   return (

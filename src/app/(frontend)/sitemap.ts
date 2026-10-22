@@ -1,11 +1,12 @@
 import type { MetadataRoute } from 'next'
 
 import { getPayloadClient } from '@/lib/payload'
+import { siteUrl } from '@/lib/siteUrl'
 
 export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+  const base = siteUrl()
   const payload = await getPayloadClient()
   const opts = { limit: 5000, depth: 0, pagination: false, overrideAccess: false } as const
   const [products, categories, pages, posts] = await Promise.all([

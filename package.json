@@ -14,7 +14,7 @@
     "generate:importmap": "payload generate:importmap",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed/index.ts",
     "typecheck": "tsc --noEmit",
-    "ci": "cross-env NODE_OPTIONS=--no-deprecation payload migrate && pnpm build"
+    "ci": "cross-env NODE_OPTIONS=--no-deprecation payload migrate && node scripts/seed-if-demo.mjs && pnpm build"
   },
   "engines": {
     "node": "^22.23.4 || >=24.22.1"

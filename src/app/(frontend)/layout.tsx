@@ -4,10 +4,11 @@ import React from 'react'
 import { CartProvider } from '@/components/cart/CartProvider'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import { siteUrl } from '@/lib/siteUrl'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'),
+  metadataBase: new URL(siteUrl()),
   title: {
     default: 'TAB Jardins – Pépinière et motoculture à Étampes',
     template: '%s · TAB Jardins',

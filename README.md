@@ -46,6 +46,14 @@ pnpm dev
 2. `pnpm generate:types` puis `pnpm generate:importmap` si des composants d'admin changent.
 3. `pnpm payload migrate:create <nom>` pour créer la migration de base de données. En production, la commande de build est `pnpm ci`, qui applique les migrations puis construit le site.
 
-## Déploiement (à venir)
+## Déploiement sur Vercel
 
-Variables à définir sur Vercel : `DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SERVER_URL`. Les médias devront être stockés sur un stockage objet (Vercel Blob ou S3) : le disque de Vercel n'est pas persistant.
+1. Sur vercel.com : **Add New › Project**, importer le dépôt `TABJardins` (le fichier `vercel.json` règle la commande de build).
+2. Onglet **Storage** du projet : créer une base **Neon** (Postgres) et la connecter au projet. La variable `DATABASE_URL` est ajoutée automatiquement.
+3. **Settings › Environment Variables** :
+   - `PAYLOAD_SECRET` : une longue chaîne aléatoire
+   - `SEED_DEMO` = `true` pour charger les données de démonstration (à retirer ensuite)
+   - `NEXT_PUBLIC_SERVER_URL` : l'adresse définitive du site, une fois le domaine branché
+4. Relancer le déploiement. Le build applique les migrations de base de données puis construit le site.
+
+À prévoir avant la mise en ligne : stockage des médias (Vercel Blob ou S3), le disque de Vercel n'étant pas persistant.

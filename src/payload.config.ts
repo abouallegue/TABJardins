@@ -6,6 +6,8 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { fr } from '@payloadcms/translations/languages/fr'
 import sharp from 'sharp'
 
+import { siteUrl } from './lib/siteUrl'
+
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Categories } from './collections/Categories'
@@ -23,7 +25,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
+  serverURL: siteUrl(),
   admin: {
     user: Users.slug,
     meta: { titleSuffix: ' · TAB Jardins' },
@@ -50,7 +52,10 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
   db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URI || '' },
+    pool: {
+      // DATABASE_URL / POSTGRES_URL sont créées par l'intégration Neon de Vercel.
+      connectionString: process.env.DATABASE_URI || process.env.DATABASE_URL || process.env.POSTGRES_URL || '',
+    },
   }),
   sharp,
 })
